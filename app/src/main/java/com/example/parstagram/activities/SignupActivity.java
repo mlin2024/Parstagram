@@ -128,7 +128,7 @@ public class SignupActivity extends AppCompatActivity {
     // Starts an intent to go to the loginOrSignup activity
     private void goLoginOrSignupActivity() {
         Intent intent = new Intent(this, LoginOrSignupActivity.class);
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        startActivity(intent);
     }
 
     // Starts an intent to go to the main activity
@@ -147,15 +147,19 @@ public class SignupActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == android.R.id.home) {
-            goLoginOrSignupActivity();
-            return true;
+        switch (id) {
+            case android.R.id.home:
+                goLoginOrSignupActivity();
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
         goLoginOrSignupActivity();
+        finish();
     }
 }
