@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
             else { // The login succeded
-                Toast.makeText(LoginActivity.this, R.string.welcome + username + "!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, getResources().getString(R.string.welcome) + username + "!", Toast.LENGTH_SHORT).show();
                 goMainActivity();
                 finish();
             }

@@ -109,7 +109,7 @@ public class SignupActivity extends AppCompatActivity {
                 return;
             }
             else { // The signup succeded
-                Toast.makeText(SignupActivity.this, R.string.welcome + username + "!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignupActivity.this, getResources().getString(R.string.welcome) + username + "!", Toast.LENGTH_SHORT).show();
                 goMainActivity();
                 finish();
             }
