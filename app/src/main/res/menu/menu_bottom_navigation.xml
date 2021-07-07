@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_compose"
+        android:checkable="true"
+        android:icon="@android:drawable/ic_menu_camera"
+        android:title="@string/compose"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_timeline"
+        android:checkable="true"
+        android:icon="@mipmap/ic_launcher_foreground"
+        android:title="@string/timeline"
+        app:showAsAction="always" />
+</menu>
