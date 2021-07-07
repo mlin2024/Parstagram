@@ -1,4 +1,19 @@
 <resources>
     <string name="app_name">Parstagram</string>
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>
+    <string name="asterisk_required">All fields marked with an asterisk (*) are required.</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="username_asterisk">Username*</string>
+    <string name="password_asterisk">Password*</string>
+    <string name="email">Email</string>
+    <string name="email_hint">john@example.com</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="verifying_credentials">Verifying credentials...</string>
+    <string name="signup_failed">Signup failed, please try again</string>
+    <string name="login_failed">Login failed</string>
+    <string name="welcome">Welcome to Parstagram,</string>
+    <string name="login_text">Already have an account?</string>
+    <string name="signup_text">Want to create a new account?</string>
 </resources>
