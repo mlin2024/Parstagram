@@ -7,10 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".activities.SignupActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/signupToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/Theme.Parstagram"></androidx.appcompat.widget.Toolbar>
+
     <TextView
         android:id="@+id/asterisk_required"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/signupToolbar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="@string/asterisk_required" />

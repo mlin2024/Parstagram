@@ -1,7 +1,11 @@
 package com.example.parstagram.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuItemCompat;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +14,8 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -30,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final String TAG = "LoginActivity";
 
     public RelativeLayout loginRelativeLayout;
+    public Toolbar loginToolbar;
     public RelativeLayout editTextLayout;
     public TextInputLayout usernameInputLayout;
     public EditText usernameEditText;
@@ -45,6 +52,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         loginRelativeLayout = findViewById(R.id.loginRelativeLayout);
+        loginToolbar = findViewById(R.id.loginToolbar);
+        setSupportActionBar(loginToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         editTextLayout = findViewById(R.id.editTextLayout);
         usernameInputLayout = findViewById(R.id.usernameInputLayout);
         usernameEditText = findViewById(R.id.usernameEditText);
@@ -53,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         shake = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.shake);
         loginProgressDialog = new ProgressDialog(LoginActivity.this);
-        loginProgressDialog.setMessage(R.string.verifying_credentials + "");
+        loginProgressDialog.setMessage(getResources().getString(R.string.verifying_credentials));
 
         // Enable username hint only if username field is in focus
         usernameEditText.setOnFocusChangeListener((v, hasFocus) -> {
@@ -91,11 +102,17 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
             else { // The login succeded
-                Toast.makeText(LoginActivity.this, getResources().getString(R.string.welcome) + username + "!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, getResources().getString(R.string.welcome) + " " + username + "!", Toast.LENGTH_SHORT).show();
                 goMainActivity();
                 finish();
             }
         });
+    }
+
+    // Starts an intent to go to the loginOrSignup activity
+    private void goLoginOrSignupActivity() {
+        Intent intent = new Intent(this, LoginOrSignupActivity.class);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     // Starts an intent to go to the main activity
@@ -106,7 +123,23 @@ public class LoginActivity extends AppCompatActivity {
 
     // Minimizes the soft keyboard
     public void hideSoftKeyboard(View view){
-        InputMethodManager imm =(InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            goLoginOrSignupActivity();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        goLoginOrSignupActivity();
     }
 }

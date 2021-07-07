@@ -1,7 +1,9 @@
 package com.example.parstagram.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +12,8 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -31,6 +35,7 @@ public class SignupActivity extends AppCompatActivity {
     public static final String TAG = "SignupActivity";
 
     public RelativeLayout signupRelativeLayout;
+    public Toolbar signupToolbar;
     public RelativeLayout editTextLayout;
     public TextInputLayout usernameInputLayout;
     public EditText usernameEditText;
@@ -40,7 +45,7 @@ public class SignupActivity extends AppCompatActivity {
     public EditText emailEditText;
     public Button signupButton;
     Animation shake;
-    ProgressDialog loginProgressDialog;
+    ProgressDialog signupProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,10 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         signupRelativeLayout = findViewById(R.id.signupRelativeLayout);
+        signupToolbar = findViewById(R.id.signupToolbar);
+        setSupportActionBar(signupToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         editTextLayout = findViewById(R.id.editTextLayout);
         usernameInputLayout = findViewById(R.id.usernameInputLayout);
         usernameEditText = findViewById(R.id.usernameEditText);
@@ -57,8 +66,8 @@ public class SignupActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.emailEditText);
         signupButton = findViewById(R.id.signupButton);
         shake = AnimationUtils.loadAnimation(SignupActivity.this, R.anim.shake);
-        loginProgressDialog = new ProgressDialog(SignupActivity.this);
-        loginProgressDialog.setMessage(R.string.verifying_credentials + "");
+        signupProgressDialog = new ProgressDialog(SignupActivity.this);
+        signupProgressDialog.setMessage(getResources().getString(R.string.verifying_credentials));
 
         // Enable username hint only if username field is in focus
         usernameEditText.setOnFocusChangeListener((v, hasFocus) -> {
@@ -98,9 +107,9 @@ public class SignupActivity extends AppCompatActivity {
         user.setUsername(username);
         user.setPassword(password);
         if (!email.isEmpty()) user.setEmail(email);
-        loginProgressDialog.show();
+        signupProgressDialog.show();
         user.signUpInBackground(e -> {
-            loginProgressDialog.dismiss();
+            signupProgressDialog.dismiss();
             if (e != null) { // The signup failed
                 Log.e(TAG, "Signup failed", e);
                 Snackbar.make(editTextLayout, R.string.signup_failed, Snackbar.LENGTH_LONG).show();
@@ -109,11 +118,17 @@ public class SignupActivity extends AppCompatActivity {
                 return;
             }
             else { // The signup succeded
-                Toast.makeText(SignupActivity.this, getResources().getString(R.string.welcome) + username + "!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignupActivity.this, getResources().getString(R.string.welcome) + " " + username + "!", Toast.LENGTH_SHORT).show();
                 goMainActivity();
                 finish();
             }
         });
+    }
+
+    // Starts an intent to go to the loginOrSignup activity
+    private void goLoginOrSignupActivity() {
+        Intent intent = new Intent(this, LoginOrSignupActivity.class);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     // Starts an intent to go to the main activity
@@ -124,7 +139,23 @@ public class SignupActivity extends AppCompatActivity {
 
     // Minimizes the soft keyboard
     public void hideSoftKeyboard(View view){
-        InputMethodManager imm =(InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            goLoginOrSignupActivity();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        goLoginOrSignupActivity();
     }
 }

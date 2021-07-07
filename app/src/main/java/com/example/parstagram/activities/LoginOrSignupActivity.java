@@ -26,7 +26,7 @@ public class LoginOrSignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_or_signup);
 
         if (ParseUser.getCurrentUser() != null) {
-            //goMainActivity();
+            goMainActivity();
         }
 
         loginStartButton = findViewById(R.id.loginStartButton);
@@ -46,7 +46,7 @@ public class LoginOrSignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i(TAG, "onClick signupStartButton");
                 goSignupActivity();
-                finish();
+                //finish();
             }
         });
     }
