@@ -22,4 +22,7 @@
     <string name="parstagram">Parstagram</string>
     <string name="compose">Compose</string>
     <string name="timeline">Timeline</string>
+    <string name="description">Description</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="post">Post</string>
 </resources>
