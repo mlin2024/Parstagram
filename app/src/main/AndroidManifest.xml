@@ -13,16 +13,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Parstagram">
-        <activity android:name=".activities.LoginOrSignupActivity">
+        <activity
+            android:name=".activities.LoginOrSignupActivity"
+            android:label="@string/login"
+            android:theme="@style/Theme.Parstagram">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.SignupActivity" />
-        <activity android:name=".activities.MainActivity" />
-        <activity android:name=".activities.LoginActivity" />
+        <activity
+            android:name=".activities.LoginActivity"
+            android:label="@string/login"
+            android:theme="@style/Theme.Parstagram"/>
+        <activity
+            android:name=".activities.SignupActivity"
+            android:label="@string/sign_up"
+            android:theme="@style/Theme.Parstagram"/>
+        <activity
+            android:name=".activities.MainActivity"
+            android:label="@string/parstagram"
+            android:theme="@style/Theme.Parstagram"/>
 
         <meta-data
             android:name="com.parse.SERVER_URL"

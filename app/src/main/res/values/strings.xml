@@ -19,4 +19,5 @@
     <string name="welcome">Welcome to Parstagram,</string>
     <string name="login_text">Already have an account?</string>
     <string name="signup_text">Want to create a new account?</string>
+    <string name="parstagram">Parstagram</string>
 </resources>

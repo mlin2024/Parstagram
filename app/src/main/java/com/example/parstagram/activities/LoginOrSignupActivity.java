@@ -26,8 +26,8 @@ public class LoginOrSignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_or_signup);
 
         if (ParseUser.getCurrentUser() != null) {
-            finish();
             goMainActivity();
+            finish();
         }
 
         loginStartButton = findViewById(R.id.loginStartButton);
