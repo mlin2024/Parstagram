@@ -50,29 +50,42 @@ public class SignupActivity extends AppCompatActivity {
         signupRelativeLayout = findViewById(R.id.signupRelativeLayout);
         editTextLayout = findViewById(R.id.editTextLayout);
         usernameInputLayout = findViewById(R.id.usernameInputLayout);
-        usernameInputLayout.setHint(R.string.username);
         usernameEditText = findViewById(R.id.usernameEditText);
         passwordInputLayout = findViewById(R.id.passwordInputLayout);
-        passwordInputLayout.setHint(R.string.password);
         passwordEditText = findViewById(R.id.passwordEditText);
         emailInputLayout = findViewById(R.id.emailInputLayout);
-        emailInputLayout.setHint(R.string.email);
         emailEditText = findViewById(R.id.emailEditText);
         signupButton = findViewById(R.id.signupButton);
         shake = AnimationUtils.loadAnimation(SignupActivity.this, R.anim.shake);
         loginProgressDialog = new ProgressDialog(SignupActivity.this);
         loginProgressDialog.setMessage(R.string.verifying_credentials + "");
 
-        signupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "onClick loginButton");
-                String username = usernameEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
-                String email = emailEditText.getText().toString();
-                hideSoftKeyboard(signupRelativeLayout);
-                signupUser(username, password, email);
-            }
+        // Enable username hint only if username field is in focus
+        usernameEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) usernameInputLayout.setHint(R.string.Username_asterisk);
+            else usernameInputLayout.setHint("");
+        });
+
+        // Enable password hint only if password field is in focus
+        passwordEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) passwordInputLayout.setHint(R.string.Password_asterisk);
+            else passwordInputLayout.setHint("");
+        });
+
+        // Enable email hint only if email field is in focus
+        emailEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) emailInputLayout.setHint(R.string.Email);
+            else emailInputLayout.setHint("");
+        });
+
+        // Set click logic for button
+        signupButton.setOnClickListener(v -> {
+            Log.i(TAG, "onClick loginButton");
+            String username = usernameEditText.getText().toString();
+            String password = passwordEditText.getText().toString();
+            String email = emailEditText.getText().toString();
+            hideSoftKeyboard(signupRelativeLayout);
+            signupUser(username, password, email);
         });
     }
 
@@ -86,22 +99,19 @@ public class SignupActivity extends AppCompatActivity {
         user.setPassword(password);
         if (!email.isEmpty()) user.setEmail(email);
         loginProgressDialog.show();
-        user.signUpInBackground(new SignUpCallback() {
-            @Override
-            public void done(ParseException e) {
-                loginProgressDialog.dismiss();
-                if (e != null) { // The signup failed
-                    Log.e(TAG, "Signup failed", e);
-                    Snackbar.make(editTextLayout, R.string.signup_failed, Snackbar.LENGTH_LONG).show();
-                    editTextLayout.setBackgroundColor(Color.argb(100, 255, 0, 0));
-                    editTextLayout.startAnimation(shake);
-                    return;
-                }
-                else { // The signup succeded
-                    Toast.makeText(SignupActivity.this, "Welcome to Parstagram, " + username + "!", Toast.LENGTH_SHORT).show();
-                    goMainActivity();
-                    finish();
-                }
+        user.signUpInBackground(e -> {
+            loginProgressDialog.dismiss();
+            if (e != null) { // The signup failed
+                Log.e(TAG, "Signup failed", e);
+                Snackbar.make(editTextLayout, R.string.signup_failed, Snackbar.LENGTH_LONG).show();
+                editTextLayout.setBackgroundColor(Color.argb(100, 255, 0, 0));
+                editTextLayout.startAnimation(shake);
+                return;
+            }
+            else { // The signup succeded
+                Toast.makeText(SignupActivity.this, R.string.welcome + username + "!", Toast.LENGTH_SHORT).show();
+                goMainActivity();
+                finish();
             }
         });
     }

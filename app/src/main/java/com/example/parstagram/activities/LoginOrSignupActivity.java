@@ -37,6 +37,7 @@ public class LoginOrSignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i(TAG, "onClick loginStartButton");
                 goLoginActivity();
+                finish();
             }
         });
 
@@ -45,6 +46,7 @@ public class LoginOrSignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i(TAG, "onClick signupStartButton");
                 goSignupActivity();
+                finish();
             }
         });
     }

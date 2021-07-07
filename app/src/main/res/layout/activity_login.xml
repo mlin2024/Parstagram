@@ -18,7 +18,8 @@
             android:id="@+id/usernameInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true">
+            android:layout_alignParentTop="true"
+            app:boxBackgroundMode="filled">
 
             <EditText
                 android:id="@+id/usernameEditText"
@@ -37,8 +38,10 @@
             android:id="@+id/passwordInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/usernameInputLayout"
             android:layout_marginTop="20dp"
-            android:layout_below="@+id/usernameInputLayout">
+            app:boxBackgroundMode="filled">
+
             <EditText
                 android:id="@+id/passwordEditText"
                 android:layout_width="match_parent"
@@ -48,9 +51,9 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
                 android:hint="@string/password"
+                android:imeOptions="actionDone"
                 android:inputType="textPassword"
-                android:singleLine="true"
-                android:imeOptions="actionDone" />
+                android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
     </RelativeLayout>
 
