@@ -43,8 +43,8 @@ public class LoginActivity extends AppCompatActivity {
     public TextInputLayout passwordInputLayout;
     public EditText passwordEditText;
     public Button loginButton;
-    Animation shake;
-    ProgressDialog loginProgressDialog;
+    public Animation shake;
+    public ProgressDialog loginProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,16 +103,9 @@ public class LoginActivity extends AppCompatActivity {
             }
             else { // The login succeded
                 Toast.makeText(LoginActivity.this, getResources().getString(R.string.welcome) + " " + username + "!", Toast.LENGTH_SHORT).show();
-                goMainActivity();
                 finish();
             }
         });
-    }
-
-    // Starts an intent to go to the loginOrSignup activity
-    private void goLoginOrSignupActivity() {
-        Intent intent = new Intent(this, LoginOrSignupActivity.class);
-        startActivity(intent);
     }
 
     // Starts an intent to go to the main activity
@@ -133,7 +126,6 @@ public class LoginActivity extends AppCompatActivity {
 
         switch (id) {
             case android.R.id.home:
-                goLoginOrSignupActivity();
                 finish();
                 return true;
             default:
@@ -143,7 +135,6 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        goLoginOrSignupActivity();
         finish();
     }
 }

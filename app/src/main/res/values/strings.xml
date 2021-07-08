@@ -22,7 +22,13 @@
     <string name="parstagram">Parstagram</string>
     <string name="compose">Compose</string>
     <string name="timeline">Timeline</string>
-    <string name="description">Description</string>
+    <string name="caption">Caption</string>
     <string name="take_picture">Take Picture</string>
+    <string name="retake_picture">Retake Picture</string>
     <string name="post">Post</string>
+    <string name="error_publishing_post">Error publishing post</string>
+    <string name="caption_error">Caption can\'t be empty</string>
+    <string name="image_error">You must include an image</string>
+    <string name="publishing_post">Publishing your post...</string>
+    <string name="published">Published!</string>
 </resources>

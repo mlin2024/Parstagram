@@ -44,8 +44,8 @@ public class SignupActivity extends AppCompatActivity {
     public TextInputLayout emailInputLayout;
     public EditText emailEditText;
     public Button signupButton;
-    Animation shake;
-    ProgressDialog signupProgressDialog;
+    public Animation shake;
+    public ProgressDialog signupProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,22 +119,9 @@ public class SignupActivity extends AppCompatActivity {
             }
             else { // The signup succeded
                 Toast.makeText(SignupActivity.this, getResources().getString(R.string.welcome) + " " + username + "!", Toast.LENGTH_SHORT).show();
-                goMainActivity();
                 finish();
             }
         });
-    }
-
-    // Starts an intent to go to the loginOrSignup activity
-    private void goLoginOrSignupActivity() {
-        Intent intent = new Intent(this, LoginOrSignupActivity.class);
-        startActivity(intent);
-    }
-
-    // Starts an intent to go to the main activity
-    private void goMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 
     // Minimizes the soft keyboard
@@ -149,7 +136,6 @@ public class SignupActivity extends AppCompatActivity {
 
         switch (id) {
             case android.R.id.home:
-                goLoginOrSignupActivity();
                 finish();
                 return true;
             default:
@@ -159,7 +145,6 @@ public class SignupActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        goLoginOrSignupActivity();
         finish();
     }
 }

@@ -33,23 +33,25 @@ public class LoginOrSignupActivity extends AppCompatActivity {
         loginStartButton = findViewById(R.id.loginStartButton);
         signupStartButton = findViewById(R.id.signupStartButton);
 
-        loginStartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "onClick loginStartButton");
-                goLoginActivity();
-                finish();
-            }
+        loginStartButton.setOnClickListener(v -> {
+            Log.i(TAG, "onClick loginStartButton");
+            goLoginActivity();
         });
 
-        signupStartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "onClick signupStartButton");
-                goSignupActivity();
-                finish();
-            }
+        signupStartButton.setOnClickListener(v -> {
+            Log.i(TAG, "onClick signupStartButton");
+            goSignupActivity();
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (ParseUser.getCurrentUser() != null) {
+            goMainActivity();
+            finish();
+        }
     }
 
     private void goMainActivity() {
