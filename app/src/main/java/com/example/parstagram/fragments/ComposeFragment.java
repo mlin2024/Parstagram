@@ -32,7 +32,9 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.parstagram.BitmapScaler;
-import com.example.parstagram.Post;
+import com.example.parstagram.activities.LoginOrSignupActivity;
+import com.example.parstagram.activities.MainActivity;
+import com.example.parstagram.models.Post;
 import com.example.parstagram.R;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -59,7 +61,8 @@ public class ComposeFragment extends Fragment {
     public Button postButton;
     public ProgressDialog loginProgressDialog;
 
-    public ComposeFragment() {}
+    public ComposeFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -102,14 +105,12 @@ public class ComposeFragment extends Fragment {
             if (caption.isEmpty()) {
                 Toast.makeText(getContext(), getResources().getString(R.string.caption_error), Toast.LENGTH_SHORT).show();
                 return;
-            }
-            else if (photoFile == null || postImageView.getDrawable() == null) {
+            } else if (photoFile == null || postImageView.getDrawable() == null) {
                 Toast.makeText(getContext(), getResources().getString(R.string.image_error), Toast.LENGTH_SHORT).show();
                 return;
-            }
-            else {
-                 ParseUser currentUser = ParseUser.getCurrentUser();
-                 savePost(caption, photoFile, currentUser);
+            } else {
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                savePost(caption, photoFile, currentUser);
             }
         });
     }
@@ -119,7 +120,8 @@ public class ComposeFragment extends Fragment {
         super.onResume();
 
         // Set text to "Retake Picture" if image is already taken
-        if (postImageView.getDrawable() != null) takePictureButton.setText(getResources().getString(R.string.retake_picture));
+        if (postImageView.getDrawable() != null)
+            takePictureButton.setText(getResources().getString(R.string.retake_picture));
     }
 
     private void savePost(String caption, File photoFile, ParseUser currentUser) {
@@ -138,8 +140,7 @@ public class ComposeFragment extends Fragment {
                 if (e != null) { // Saving post failed
                     Log.e(TAG, "Saving post failed", e);
                     Toast.makeText(getContext(), getResources().getString(R.string.error_publishing_post), Toast.LENGTH_SHORT).show();
-                }
-                else { // Saving post succeeded
+                } else { // Saving post succeeded
                     Log.i(TAG, "Saving post succeeded");
                     Toast.makeText(getContext(), getResources().getString(R.string.published), Toast.LENGTH_SHORT).show();
                     // Set everything back to default
@@ -169,8 +170,7 @@ public class ComposeFragment extends Fragment {
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             // Start the image capture intent to take photo
             startActivityForResult(intent, CAMERA_IMAGE_CODE);
-        }
-        else {
+        } else {
             Log.e(TAG, "No app can handle this intent");
             Toast.makeText(getContext(), getResources().getString(R.string.no_camera), Toast.LENGTH_SHORT).show();
         }
@@ -188,8 +188,7 @@ public class ComposeFragment extends Fragment {
         if (intent.resolveActivity(getContext().getPackageManager()) != null) {
             // Bring up gallery to select a photo
             startActivityForResult(intent, GALLERY_IMAGE_CODE);
-        }
-        else {
+        } else {
             Log.e(TAG, "No app can handle this intent");
             Toast.makeText(getContext(), getResources().getString(R.string.no_gallery), Toast.LENGTH_SHORT).show();
         }
@@ -227,13 +226,10 @@ public class ComposeFragment extends Fragment {
                     // Load the original taken image into the ImageView
                     postImageView.setImageBitmap(rawTakenImage);
                 }
-            }
-            else { // Result failed
+            } else { // Result failed
                 Toast.makeText(getContext(), getResources().getString(R.string.error_camera_photo), Toast.LENGTH_SHORT).show();
             }
-        }
-
-        else if (requestCode == GALLERY_IMAGE_CODE) { // If a photo was chosen from the gallery
+        } else if (requestCode == GALLERY_IMAGE_CODE) { // If a photo was chosen from the gallery
             Log.i(TAG, "Photo was chosen from gallery " + data.getDataString());
             if (resultCode == Activity.RESULT_OK) { // Result succeeded
                 Uri chosenPhotoUri = data.getData();
@@ -259,8 +255,7 @@ public class ComposeFragment extends Fragment {
                     // Load the original taken image into the ImageView
                     postImageView.setImageBitmap(rawChosenImage);
                 }
-            }
-            else { // Result failed
+            } else { // Result failed
                 Toast.makeText(getContext(), getResources().getString(R.string.error_gallery_photo), Toast.LENGTH_SHORT).show();
             }
         }
@@ -298,7 +293,7 @@ public class ComposeFragment extends Fragment {
         Bitmap image = null;
         try {
             // check version of Android on device
-            if(Build.VERSION.SDK_INT > 27){
+            if (Build.VERSION.SDK_INT > 27) {
                 // on newer versions of Android, use the new decodeBitmap method
                 ImageDecoder.Source source = ImageDecoder.createSource(getContext().getContentResolver(), photoUri);
                 image = ImageDecoder.decodeBitmap(source);
@@ -320,7 +315,7 @@ public class ComposeFragment extends Fragment {
         File mediaStorageDir = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
 
         // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
             Log.d(TAG, "Failed to create directory");
         }
 
@@ -331,7 +326,7 @@ public class ComposeFragment extends Fragment {
     }
 
     // Minimizes the soft keyboard
-    public void hideSoftKeyboard(View view){
+    public void hideSoftKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }

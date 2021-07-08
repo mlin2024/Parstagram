@@ -20,14 +20,13 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
 
     public Toolbar mainToolbar;
-    public BottomNavigationView bottomNavigationView;
+    public static BottomNavigationView bottomNavigationView;
+    final FragmentManager fragmentManager = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        final FragmentManager fragmentManager = getSupportFragmentManager();
 
         mainToolbar = findViewById(R.id.mainToolbar);
         setSupportActionBar(mainToolbar);
