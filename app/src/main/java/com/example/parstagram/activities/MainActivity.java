@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import com.example.parstagram.R;
 import com.example.parstagram.fragments.ComposeFragment;
@@ -20,8 +21,12 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
 
     public Toolbar mainToolbar;
-    public static BottomNavigationView bottomNavigationView;
-    final FragmentManager fragmentManager = getSupportFragmentManager();
+    FrameLayout fragmentContainerView;
+    public BottomNavigationView bottomNavigationView;
+    public FragmentManager fragmentManager;
+    public Fragment activeFragment;
+    public Fragment composeFragment;
+    public Fragment timelineFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +37,30 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mainToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        fragmentContainerView = findViewById(R.id.fragmentContainerView);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        fragmentManager = getSupportFragmentManager();
+        composeFragment = new ComposeFragment();
+        timelineFragment = new TimelineFragment();
+        activeFragment = timelineFragment;
+
+        fragmentManager.beginTransaction().add(R.id.fragmentContainerView, composeFragment).hide(composeFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.fragmentContainerView, timelineFragment).commit();
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.action_compose:
-                    fragment = new ComposeFragment();
+                    activeFragment = composeFragment;
                     break;
                 case R.id.action_timeline:
                 default:
-                    fragment = new TimelineFragment();
+                    activeFragment = timelineFragment;
             }
-            fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, fragment).commit();
+            // Hide everything except the active fragment
+            fragmentManager.beginTransaction().hide(composeFragment).commit();
+            fragmentManager.beginTransaction().hide(timelineFragment).commit();
+            fragmentManager.beginTransaction().show(activeFragment).commit();
             return true;
         });
         bottomNavigationView.setSelectedItemId(R.id.action_timeline);
