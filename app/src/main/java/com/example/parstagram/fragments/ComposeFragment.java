@@ -199,7 +199,6 @@ public class ComposeFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == CAMERA_IMAGE_CODE) { // If a photo was taken from the camera
-            Log.i(TAG, "Photo was taken from camera " + Uri.fromFile(getPhotoFileUri(photoFileName)));
             if (resultCode == Activity.RESULT_OK) { // Result succeeded
                 Uri takenPhotoUri = Uri.fromFile(getPhotoFileUri(photoFileName));
                 // By this point we have the camera photo on disk
@@ -230,7 +229,6 @@ public class ComposeFragment extends Fragment {
                 Toast.makeText(getContext(), getResources().getString(R.string.error_camera_photo), Toast.LENGTH_SHORT).show();
             }
         } else if (requestCode == GALLERY_IMAGE_CODE) { // If a photo was chosen from the gallery
-            Log.i(TAG, "Photo was chosen from gallery " + data.getDataString());
             if (resultCode == Activity.RESULT_OK) { // Result succeeded
                 Uri chosenPhotoUri = data.getData();
                 Bitmap rawChosenImage = loadFromUri(chosenPhotoUri);
