@@ -66,12 +66,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         public TextView authorTextView;
         public ImageView postImageView;
         public TextView captionTextView;
+        public TextView timestampTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             authorTextView = itemView.findViewById(R.id.authorTextView);
             postImageView = itemView.findViewById(R.id.postImageView);
             captionTextView = itemView.findViewById(R.id.captionTextView);
+            timestampTextView = itemView.findViewById(R.id.timestampTextView);
             itemView.setOnClickListener(this);
         }
 
@@ -85,6 +87,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                         .into(postImageView);
             }
             captionTextView.setText(post.getCaption());
+            timestampTextView.setText(post.getTimestamp());
         }
 
         @Override

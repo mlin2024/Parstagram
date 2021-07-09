@@ -22,6 +22,7 @@ public class PostDetailsActivity extends AppCompatActivity {
     TextView authorTextViewDetail;
     ImageView postImageViewDetail;
     TextView captionTextViewDetail;
+    TextView timestampTextViewDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         authorTextViewDetail = findViewById(R.id.authorTextViewDetail);
         postImageViewDetail = findViewById(R.id.postImageViewDetail);
         captionTextViewDetail = findViewById(R.id.captionTextViewDetail);
+        timestampTextViewDetail = findViewById(R.id.timestampTextViewDetail);
 
         // Unwrap the post that was passed in by the intent
         post = (Post) getIntent().getExtras().getSerializable(Post.class.getSimpleName());
@@ -45,6 +47,7 @@ public class PostDetailsActivity extends AppCompatActivity {
                 .load(post.getImage().getUrl())
                 .into(postImageViewDetail);
         captionTextViewDetail.setText(post.getCaption());
+        timestampTextViewDetail.setText(post.getTimestamp());
     }
 
     @Override

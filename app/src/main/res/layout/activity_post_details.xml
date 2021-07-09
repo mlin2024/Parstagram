@@ -56,6 +56,15 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
                 tools:text="Caption" />
+
+            <TextView
+                android:id="@+id/timestampTextViewDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                tools:text="Timestamp" />
         </LinearLayout>
     </ScrollView>
 
