@@ -35,4 +35,5 @@
     <string name="error_gallery_photo">Something went wrong uploading the picture, please try again</string>
     <string name="no_camera">You have no camera app that Parstagram can use to take a photo.</string>
     <string name="no_gallery">You have no gallery app that Parstagram can use to upload a photo.</string>
+    <string name="details">Details</string>
 </resources>

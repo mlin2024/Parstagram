@@ -1,6 +1,8 @@
 package com.example.parstagram.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +13,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.parstagram.activities.PostDetailsActivity;
 import com.example.parstagram.models.Post;
 import com.example.parstagram.R;
 import com.parse.ParseFile;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
+    public static final String TAG = "PostAdapter";
 
     public Context context;
     public List<Post> posts;
@@ -57,7 +62,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView authorTextView;
         public ImageView postImageView;
         public TextView captionTextView;
@@ -67,6 +72,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             authorTextView = itemView.findViewById(R.id.authorTextView);
             postImageView = itemView.findViewById(R.id.postImageView);
             captionTextView = itemView.findViewById(R.id.captionTextView);
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Post post) {
@@ -74,9 +80,26 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             authorTextView.setText(post.getAuthor().getUsername());
             ParseFile image = post.getImage();
             if (image != null) {
-                Glide.with(context).load(image.getUrl()).into(postImageView);
+                Glide.with(context)
+                        .load(image.getUrl())
+                        .into(postImageView);
             }
             captionTextView.setText(post.getCaption());
+        }
+
+        @Override
+        public void onClick(View v) {
+            Log.i(TAG, "Clicked");
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) { // Check if position is valid
+                Post post = posts.get(position);
+
+                Intent intent = new Intent(context, PostDetailsActivity.class);
+
+                // Attach the post to the intent so it can be sent along with it
+                intent.putExtra(Post.class.getSimpleName(), (Serializable) post);
+                context.startActivity(intent);
+            }
         }
     }
 }

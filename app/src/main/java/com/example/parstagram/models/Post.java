@@ -1,16 +1,18 @@
 package com.example.parstagram.models;
 
-import com.parse.Parse;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import java.io.Serializable;
 
 @ParseClassName("Post")
-public class Post extends ParseObject {
+public class Post extends ParseObject implements Serializable {
     public static final String KEY_CAPTION = "caption";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_AUTHOR = "author";
+
+    public Post() {};
 
     public String getCaption() {
         return getString(KEY_CAPTION);
