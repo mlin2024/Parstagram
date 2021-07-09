@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ public class TimelineFragment extends Fragment {
 
     public PostAdapter postAdapter;
     public List<Post> timeline;
+    public SwipeRefreshLayout swipeRefreshLayout;
     public RecyclerView timelineRecyclerView;
 
     public TimelineFragment() {}
@@ -49,8 +51,17 @@ public class TimelineFragment extends Fragment {
 
         timeline = new ArrayList<>();
         postAdapter = new PostAdapter(getContext(), timeline);
+        swipeRefreshLayout = getView().findViewById(R.id.swipeRefreshLayout);
+        // Setup refresh listener which triggers new data loading
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            queryPosts();
+        });
+        // Configure the refreshing colors
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
         timelineRecyclerView = getView().findViewById(R.id.timelineRecyclerView);
-
         // set the adapter on the recycler view
         timelineRecyclerView.setAdapter(postAdapter);
         // set the layout manager on the recycler view
@@ -79,9 +90,12 @@ public class TimelineFragment extends Fragment {
                 }
                 else {
                     for (Post post: posts) Log.i(TAG, "Post: " + post.getCaption() + " by " + post.getAuthor().getUsername());
+                    // Signal refresh has finished
+                    swipeRefreshLayout.setRefreshing(false);
+                    // Clear out old items before appending in the new ones
+                    postAdapter.clear();
                     // save received posts to list and notify adapter of new data
-                    timeline.addAll(posts);
-                    postAdapter.notifyDataSetChanged();
+                    postAdapter.addAll(posts);
                 }
             }
         });
